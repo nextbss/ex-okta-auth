@@ -23,7 +23,7 @@ Add :okta_auth to your applications:
   end
 ```
 
-Add your configuration for okta
+Add your configuration for okta to ```config.ex```
 
 ```elixir
 config :okta_auth, OktaAuth,
