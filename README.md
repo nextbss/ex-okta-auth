@@ -2,7 +2,7 @@
 
 [![](https://img.shields.io/badge/nextbss-opensource-blue.svg)](https://www.nextbss.co.ao)
 
-**TODO: Add description**
+**Elixir library that enables your application to work with Okta via OAuth 2.0/OIDC**
 
 ## Installation
 
