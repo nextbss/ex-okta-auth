@@ -19,7 +19,7 @@ Add :okta_auth to your applications:
 
 ```elixir
   def application do
-    [extra_applications: [:ueberauth_okta]]
+    [extra_applications: [:okta_auth]]
   end
 ```
 
