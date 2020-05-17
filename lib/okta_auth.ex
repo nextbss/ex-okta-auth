@@ -2,6 +2,7 @@ defmodule OktaAuth do
   use ExOAuth2.Strategy
 
   def client do
+    
       site = System.get_env("OKTA_DOMAIN")
       ExOAuth2.Client.new([
           strategy: __MODULE__,
@@ -63,5 +64,19 @@ defmodule OktaAuth do
       client
       |> ExOAuth2.Client.get(client.site <> "/v1/userinfo", headers, opts)
       |> IO.inspect
+  end
+
+  defp validate_config!(_, _) do: raise "Config: okta_auth, OktaAuth, expects a keyword list" end
+
+  defp validate_config!(config, key) when is_list(config) do
+    with val when is_bitstring(val) <- Keyword.get(config, key),
+         {^key, true} <- if (key == :site, do: {key, String.starts_with?(val, "http")}, else: {key, val != "" })
+    do
+      config
+    else
+      false -> raise "#{inspect(key)} in okta_auth, OktaAuth, must be a bitstring"
+      {:site, false} -> raise ":site in config okta_auth, OktaAuth, is not a valid url"
+      {key, false} -> raise "#{inspect(key)} in okta_auth, OktaAuth, is an empty string"
+    end
   end
 end
