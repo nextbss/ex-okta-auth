@@ -48,27 +48,26 @@ Create a controller that will handle requests and callbacks to and from okta
 
 ```elixir
 defmodule MyAppWeb.AuthController do
-    use MyAppWeb, :controller
+  use MyAppWeb, :controller
 
-    def request(conn, _params) do
-        url = ExOktaAuth.Okta.authorize_url!
-        conn |> redirect(external: url)
-    end
+  def request(conn, _params) do
+    ExOktaAuth.Okta.authorize_url!(conn)
+  end
 
-    def callback(conn, %{"provider" => _provider, "code" => code, "state" => _state}) do
-        client = ExOktaAuth.Okta.get_token_without_auth!(code: code)
-        user = get_user_information(client)
-          conn
-          |> put_session(:current_user, user)
-          |> put_session(:access_token, client.token.access_token)
-          |> put_flash(:info, "Welcome #{user["given_name"]}")
-          |> redirect(to: "/")
-    end
+  def callback(conn, %{"provider" => _provider, "code" => code, "state" => _state}) do
+    client = ExOktaAuth.Okta.get_token_without_auth!(code: code)
+    user = get_user_information(client)
+    conn
+    |> put_session(:current_user, user)
+    |> put_session(:access_token, client.token.access_token)
+    |> put_flash(:info, "Welcome #{user["given_name"]}")
+    |> redirect(to: "/")
+  end
 
-    defp get_user_information(client) do
-        {:ok, resp} = ExOktaAuth.Okta.get_user_info(client)
-        resp.body
-    end
+  defp get_user_information(client) do
+    {:ok, resp} = ExOktaAuth.Okta.get_user_info(client)
+    resp.body
+  end
 end
 ```
 
