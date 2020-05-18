@@ -3,6 +3,7 @@ defmodule ExOktaAuth.Okta do
   Implements strategy for authenticating with Okta.
   """
   use ExOAuth2.Strategy
+  use Phoenix.Controller
   
   @doc """
   Creates a new ExOAuth2 client that will be used to
@@ -33,9 +34,10 @@ defmodule ExOktaAuth.Okta do
   @doc """
   Given necessary arguments generates authorization
   URL and parameters for interacting with Okta as a provider
+  then redirects to given url to commence auth sequence
   """
-  def authorize_url! do
-      ExOAuth2.Client.authorize_url!(
+  def authorize_url!(conn) do
+      url = ExOAuth2.Client.authorize_url!(
           client(), 
           response_type: "code",
           scope: "openid profile email",
@@ -44,7 +46,23 @@ defmodule ExOktaAuth.Okta do
       )
       |> URI.parse()
       |> URI.to_string()
+      conn
+      |> redirect(external: url)
   end
+
+  @doc """
+  Given necessary arguments generates authorization
+  URL and parameters for interacting with Okta as a provider
+  """
+  def authorize_url! do
+    ExOAuth2.Client.authorize_url!(
+        client(), 
+        response_type: "code",
+        scope: "openid profile email",
+        nonce: :crypto.strong_rand_bytes(18) |> Base.encode16 |> String.downcase,
+        state: Base.encode16(:crypto.strong_rand_bytes(18))
+    )
+end
 
   @doc """
   Retrieve an access token but does not send 
