@@ -2,7 +2,7 @@
 
 [![](https://img.shields.io/badge/nextbss-opensource-blue.svg)](https://www.nextbss.co.ao)
 
-**Elixir library that enables your application to work with Okta via OAuth 2.0/OIDC**
+**An Elixir library that enables your application to work with Okta via OAuth 2.0/OIDC**
 
 ## Installation
 
@@ -23,10 +23,10 @@ Add :okta_auth to your applications:
   end
 ```
 
-Add your configuration for okta to ```config.ex```
+Add your configuration for okta to your applications ```config.ex```
 
 ```elixir
-config :okta_auth, OktaAuth,
+config :okta_auth, OktaAuth.Okta,
   client_id: System.get_env("OKTA_CLIENT_ID"),
   client_secret: System.get_env("OKTA_CLIENT_SECRET"),
   site: "https://your-doman.okta.com",
@@ -44,19 +44,19 @@ Create scope in your routes to handle the requests and callbacks
   end
 ```
 
-Create a controller that will handle requests and callbacks
+Create a controller that will handle requests and callbacks to and from okta
 
 ```elixir
 defmodule MyAppWeb.AuthController do
     use MyAppWeb, :controller
 
     def request(conn, _params) do
-        url = OktaAuth.authorize_url!
+        url = OktaAuth.Okta.authorize_url!
         conn |> redirect(external: url)
     end
 
     def callback(conn, %{"provider" => _provider, "code" => code, "state" => _state}) do
-        client = OktaAuth.get_token_without_auth!(code: code)
+        client = OktaAuth.Okta.get_token_without_auth!(code: code)
         user = get_user_information(client)
           conn
           |> put_session(:current_user, user)
@@ -66,7 +66,7 @@ defmodule MyAppWeb.AuthController do
     end
 
     defp get_user_information(client) do
-        {:ok, resp} = OktaAuth.get_user_info(client)
+        {:ok, resp} = OktaAuth.Okta.get_user_info(client)
         resp.body
     end
 end
