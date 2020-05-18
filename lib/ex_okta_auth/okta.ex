@@ -9,7 +9,7 @@ defmodule ExOktaAuth.Okta do
   communicate with Okta 
   """
   def client do
-    config = :okta_auth
+    config = :ex_okta_auth
              |> Application.fetch_env!(__MODULE__)
              |> validate_config!(:client_id)
              |> validate_config!(:client_secret)

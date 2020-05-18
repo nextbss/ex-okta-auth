@@ -26,7 +26,7 @@ Add :ex_okta_auth to your applications:
 Add your configuration for okta to your applications ```config.ex```
 
 ```elixir
-config :okta_auth, ExOktaAuth.Okta,
+config :ex_okta_auth, ExOktaAuth.Okta,
   client_id: System.get_env("OKTA_CLIENT_ID"),
   client_secret: System.get_env("OKTA_CLIENT_SECRET"),
   site: "https://your-doman.okta.com",
