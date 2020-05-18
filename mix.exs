@@ -26,7 +26,10 @@ defmodule OktaAuth.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ex_oauth2, "~> 2.0.1"}
+      {:ex_oauth2, "~> 2.0.1"},
+
+      # Docs dependencies
+      {:ex_doc, "~> 0.19", only: :dev}
     ]
   end
 
