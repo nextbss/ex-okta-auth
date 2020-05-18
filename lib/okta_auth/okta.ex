@@ -1,6 +1,13 @@
 defmodule OktaAuth.Okta do
+  @moduledoc """
+  Implements strategy for authenticating with Okta.
+  """
   use ExOAuth2.Strategy
   
+  @doc """
+  Creates a new ExOAuth2 client that will be used to
+  communicate with Okta 
+  """
   def client do
     config = :okta_auth
              |> Application.fetch_env!(__MODULE__)
@@ -23,6 +30,10 @@ defmodule OktaAuth.Okta do
     |> ExOAuth2.Client.put_serializer("application/json", Jason)
   end
 
+  @doc """
+  Given necessary arguments generates authorization
+  URL and parameters for interacting with Okta as a provider
+  """
   def authorize_url! do
       ExOAuth2.Client.authorize_url!(
           client(), 
@@ -35,6 +46,12 @@ defmodule OktaAuth.Okta do
       |> URI.to_string()
   end
 
+  @doc """
+  Retrieve an access token but does not send 
+  the authorization header to authorization server. 
+  This is necessary in the case of okta since since otherwise
+  okta will complain.
+  """
   def get_token_without_auth!(params \\ [], headers \\ [], opts \\ []) do
       client = client()
       headers = List.keystore(headers, "accept", 1, {"accept", "*/*"})
@@ -43,6 +60,9 @@ defmodule OktaAuth.Okta do
       |> IO.inspect
   end
 
+  @doc """
+  Retrieve an access token and authenticate via authentication header
+  """
   def get_token!(params \\ [], headers \\ [], opts \\ []) do
       client = client()
       params = Keyword.put(params, :client_secret, client.client_secret)
@@ -54,6 +74,9 @@ defmodule OktaAuth.Okta do
       ExOAuth2.Strategy.AuthCode.authorize_url(client, params)
   end
 
+  @doc """ 
+  Retrieve an access token but does not send authorization header to authorization server
+  """
   def get_token_without_auth(client, params, headers) do
       client
       |> ExOAuth2.Strategy.AuthCode.get_token_without_auth(params, headers)
@@ -66,6 +89,9 @@ defmodule OktaAuth.Okta do
       |> IO.inspect
   end
 
+  @doc """
+  Retrieve the authenticated users profile information
+  """
   def get_user_info(client, headers \\ [], opts \\ []) do
       headers = List.keystore(headers, "authorization", 1, {"authorization", "Bearer " <> client.token.access_token})
       client
