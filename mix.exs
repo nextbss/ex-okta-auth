@@ -1,13 +1,18 @@
 defmodule OktaAuth.MixProject do
   use Mix.Project
 
+  @version "0.1.0"
+
   def project do
     [
       app: :okta_auth,
-      version: "0.1.0",
+      version: @version,
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      package: package(),
+      description: description(),
+      docs: docs(),
     ]
   end
 
@@ -22,6 +27,28 @@ defmodule OktaAuth.MixProject do
   defp deps do
     [
       {:ex_oauth2, "~> 2.0.1"}
+    ]
+  end
+
+  defp description do
+    "An Elixir client library that enables your application to work with Okta via OAuth 2.0/OIDC"
+  end
+
+  defp docs do
+    [
+      extras: ["README.md"],
+      main: "readme",
+      source_ref: "v#{@version}",
+      source_url: "https://github.com/nextbss/okta_auth"
+    ]
+  end
+
+  defp package do
+    [
+      files: ["lib", "mix.exs", "README.md"],
+      maintainers: ["Alexandre Juca"],
+      licenses: ["MIT"],
+      links: %{github: "https://github.com/nextbss/okta_auth"}
     ]
   end
 end
