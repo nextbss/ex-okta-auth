@@ -99,20 +99,16 @@ defmodule ExOktaAuth.Okta do
       |> IO.inspect
   end
 
-  defp validate_config!(_, _) do
-     raise "config: ex_okta_auth, ExOktaAuth, expects a keyword list"
-  end 
-
   defp validate_config!(config, key) when is_list(config) do
     with val when is_bitstring(val) <- Keyword.get(config, key),
          {^key, true} <- if(key == :site, do: {key, String.starts_with?(val, "http")}, else: {key, val != ""})
     do
       config
     else
-      false -> raise "#{inspect(key)} in ex_okta_auth, ExOktaAuth, must be a bitstring"
-      {:redirect_uri, false} -> raise ":redirect_uri in config ex_okta_auth, ExOktaAuth, is not a valid url"
-      {:site, false} -> raise ":site in config ex_okta_auth, ExOktaAuth, is not a valid url"
-      {key, false} -> raise "#{inspect(key)} in ex_okta_auth, ExOktaAuth, is an empty string"
+      false -> raise "#{inspect(key)} in ex_okta_auth, ExOktaAuth.Okta, must be a bitstring"
+      {:redirect_uri, false} -> raise ":redirect_uri in config ex_okta_auth, ExOktaAuth.Okta, is not a valid url"
+      {:site, false} -> raise ":site in config ex_okta_auth, ExOktaAuth.Okta, is not a valid url"
+      {key, false} -> raise "#{inspect(key)} in ex_okta_auth, ExOktaAuth.Okta, is an empty string"
     end
   end
 end
