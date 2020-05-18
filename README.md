@@ -1,4 +1,4 @@
-# OktaAuth
+# ExOktaAuth
 
 [![](https://img.shields.io/badge/nextbss-opensource-blue.svg)](https://www.nextbss.co.ao)
 
@@ -7,26 +7,26 @@
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `okta_auth` to your list of dependencies in `mix.exs`:
+by adding `ex_okta_auth` to your list of dependencies in `mix.exs`:
 
 ```elixir
   def deps do
-    [{:okta_auth, "~> 0.1.0"}]
+    [{:ex_okta_auth, "~> 0.1.0"}]
   end
 ```
 
-Add :okta_auth to your applications:
+Add :ex_okta_auth to your applications:
 
 ```elixir
   def application do
-    [extra_applications: [:okta_auth]]
+    [extra_applications: [:ex_okta_auth]]
   end
 ```
 
 Add your configuration for okta to your applications ```config.ex```
 
 ```elixir
-config :okta_auth, OktaAuth.Okta,
+config :okta_auth, ExExOktaAuth.Okta,
   client_id: System.get_env("OKTA_CLIENT_ID"),
   client_secret: System.get_env("OKTA_CLIENT_SECRET"),
   site: "https://your-doman.okta.com",
@@ -51,12 +51,12 @@ defmodule MyAppWeb.AuthController do
     use MyAppWeb, :controller
 
     def request(conn, _params) do
-        url = OktaAuth.Okta.authorize_url!
+        url = ExOktaAuth.Okta.authorize_url!
         conn |> redirect(external: url)
     end
 
     def callback(conn, %{"provider" => _provider, "code" => code, "state" => _state}) do
-        client = OktaAuth.Okta.get_token_without_auth!(code: code)
+        client = ExOktaAuth.Okta.get_token_without_auth!(code: code)
         user = get_user_information(client)
           conn
           |> put_session(:current_user, user)
@@ -66,7 +66,7 @@ defmodule MyAppWeb.AuthController do
     end
 
     defp get_user_information(client) do
-        {:ok, resp} = OktaAuth.Okta.get_user_info(client)
+        {:ok, resp} = ExOktaAuth.Okta.get_user_info(client)
         resp.body
     end
 end

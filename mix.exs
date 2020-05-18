@@ -1,11 +1,11 @@
-defmodule OktaAuth.MixProject do
+defmodule ExOktaAuth.MixProject do
   use Mix.Project
 
   @version "0.1.0"
 
   def project do
     [
-      app: :okta_auth,
+      app: :ex_okta_auth,
       version: @version,
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
@@ -42,7 +42,7 @@ defmodule OktaAuth.MixProject do
       extras: ["README.md"],
       main: "readme",
       source_ref: "v#{@version}",
-      source_url: "https://github.com/nextbss/okta_auth"
+      source_url: "https://github.com/nextbss/ex_okta_auth"
     ]
   end
 
@@ -51,7 +51,7 @@ defmodule OktaAuth.MixProject do
       files: ["lib", "mix.exs", "README.md"],
       maintainers: ["Alexandre Juca"],
       licenses: ["MIT"],
-      links: %{github: "https://github.com/nextbss/okta_auth"}
+      links: %{github: "https://github.com/nextbss/ex_okta_auth"}
     ]
   end
 end

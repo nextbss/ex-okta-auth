@@ -1,4 +1,4 @@
-defmodule OktaAuth.Okta do
+defmodule ExOktaAuth.Okta do
   @moduledoc """
   Implements strategy for authenticating with Okta.
   """
@@ -100,7 +100,7 @@ defmodule OktaAuth.Okta do
   end
 
   defp validate_config!(_, _) do
-     raise "config: okta_auth, OktaAuth, expects a keyword list"
+     raise "config: ex_okta_auth, ExOktaAuth, expects a keyword list"
   end 
 
   defp validate_config!(config, key) when is_list(config) do
@@ -109,10 +109,10 @@ defmodule OktaAuth.Okta do
     do
       config
     else
-      false -> raise "#{inspect(key)} in okta_auth, OktaAuth, must be a bitstring"
-      {:redirect_uri, false} -> raise ":redirect_uri in config okta_auth, OktaAuth, is not a valid url"
-      {:site, false} -> raise ":site in config okta_auth, OktaAuth, is not a valid url"
-      {key, false} -> raise "#{inspect(key)} in okta_auth, OktaAuth, is an empty string"
+      false -> raise "#{inspect(key)} in ex_okta_auth, ExOktaAuth, must be a bitstring"
+      {:redirect_uri, false} -> raise ":redirect_uri in config ex_okta_auth, ExOktaAuth, is not a valid url"
+      {:site, false} -> raise ":site in config ex_okta_auth, ExOktaAuth, is not a valid url"
+      {key, false} -> raise "#{inspect(key)} in ex_okta_auth, ExOktaAuth, is an empty string"
     end
   end
 end

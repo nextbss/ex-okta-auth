@@ -1,8 +1,8 @@
-defmodule OktaAuthTest do
+defmodule ExOktaAuthTest do
   use ExUnit.Case
-  doctest OktaAuth
+  doctest ExOktaAuth
 
   test "greets the world" do
-    assert OktaAuth.hello() == :world
+    assert ExOktaAuth.hello() == :world
   end
 end
