@@ -27,7 +27,7 @@ defmodule ExOktaAuth.MixProject do
   defp deps do
     [
       {:ex_oauth2, "~> 2.0.1"},
-
+      {:phoenix, "~> 1.5.1"},
       # Docs dependencies
       {:ex_doc, "~> 0.19", only: :dev}
     ]
