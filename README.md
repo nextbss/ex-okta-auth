@@ -1,6 +1,7 @@
 # ExOktaAuth
 
 [![](https://img.shields.io/badge/nextbss-opensource-blue.svg)](https://www.nextbss.co.ao)
+![Elixir CI](https://github.com/nextbss/ex-okta-auth/workflows/Elixir%20CI/badge.svg)
 
 **An Elixir library that enables your application to work with Okta via OAuth 2.0/OIDC**
 
