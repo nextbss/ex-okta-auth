@@ -42,7 +42,7 @@ defmodule ExOktaAuth.Okta do
           response_type: "code",
           scope: "openid profile email",
           nonce: :crypto.strong_rand_bytes(18) |> Base.encode16 |> String.downcase,
-          state: Base.encode16(:crypto.strong_rand_bytes(18))
+          state: Base.encode16(:crypto.strong_rand_bytes(18) |> String.downcase)
       )
       |> URI.parse()
       |> URI.to_string()
@@ -60,7 +60,7 @@ defmodule ExOktaAuth.Okta do
         response_type: "code",
         scope: "openid profile email",
         nonce: :crypto.strong_rand_bytes(18) |> Base.encode16 |> String.downcase,
-        state: Base.encode16(:crypto.strong_rand_bytes(18))
+        state: Base.encode16(:crypto.strong_rand_bytes(18) |> String.downcase)
     )
 end
 
