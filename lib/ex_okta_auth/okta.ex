@@ -75,7 +75,6 @@ end
       headers = List.keystore(headers, "accept", 1, {"accept", "*/*"})
       params = Keyword.put(params, :client_secret, client.client_secret)
       ExOAuth2.Client.get_token_without_auth!(client, params, headers, opts)
-      |> IO.inspect
   end
 
   @doc """
@@ -85,7 +84,6 @@ end
       client = client()
       params = Keyword.put(params, :client_secret, client.client_secret)
       ExOAuth2.Client.get_token!(client, params, headers, opts)
-      |> IO.inspect
   end
 
   def authorize_url(client, params) do
@@ -98,13 +96,11 @@ end
   def get_token_without_auth(client, params, headers) do
       client
       |> ExOAuth2.Strategy.AuthCode.get_token_without_auth(params, headers)
-      |> IO.inspect
   end
 
   def get_token(client, params, headers) do
       client
       |> ExOAuth2.Strategy.AuthCode.get_token(params, headers)
-      |> IO.inspect
   end
 
   @doc """
@@ -114,7 +110,6 @@ end
       headers = List.keystore(headers, "authorization", 1, {"authorization", "Bearer " <> client.token.access_token})
       client
       |> ExOAuth2.Client.get(client.site <> "/v1/userinfo", headers, opts)
-      |> IO.inspect
   end
 
   defp validate_config!(config, key) when is_list(config) do
